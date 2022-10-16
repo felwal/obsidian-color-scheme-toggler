@@ -1,0 +1,1 @@
+# obsidian-color-scheme-toggler
