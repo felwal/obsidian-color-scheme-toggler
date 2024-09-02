@@ -7,6 +7,7 @@ export default class ColorSchemeTogglerPlugin extends Plugin {
   async onload() {
     console.log("loading plugin");
 
+    this.refreshColorScheme();
     this.loadCommands();
   }
 
@@ -16,12 +17,24 @@ export default class ColorSchemeTogglerPlugin extends Plugin {
 
   loadCommands() {
     this.addCommand({
+      id: "refresh-color-scheme",
+      name: "Refresh color scheme",
+      callback: () => {
+        this.refreshColorScheme();
+      }
+    });
+
+    this.addCommand({
       id: "toggle-color-scheme",
       name: "Toggle color scheme",
       callback: () => {
         this.toggleColorScheme();
       }
     });
+  }
+
+  refreshColorScheme() {
+    this.app.changeTheme(this.getColorScheme());
   }
 
   toggleColorScheme() {
