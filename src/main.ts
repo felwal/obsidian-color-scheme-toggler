@@ -1,19 +1,33 @@
 import { Plugin } from "obsidian";
+import { ColorSchemeTogglerPluginSettings, DEFAULT_SETTINGS, ColorSchemeTogglerSettingTab } from "./settings"
 
 export default class ColorSchemeTogglerPlugin extends Plugin {
+  settings: ColorSchemeTogglerPluginSettings;
+
   COLOR_SCHEME_DARK = "obsidian";
   COLOR_SCHEME_LIGHT = "moonstone";
   COLOR_SCHEME_SYSTEM = "system";
 
   async onload() {
-    console.log("loading plugin");
-
-    this.refreshColorScheme();
+    await this.loadSettings();
     this.loadCommands();
+
+    if (this.settings.refreshOnStartup) {
+      this.refreshColorScheme();
+    }
+
+    this.addSettingTab(new ColorSchemeTogglerSettingTab(this.app, this));
   }
 
   onunload() {
-    console.log("unloading plugin");
+  }
+
+  async loadSettings() {
+    this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
+  }
+
+  async saveSettings() {
+    await this.saveData(this.settings);
   }
 
   loadCommands() {
