@@ -34,7 +34,11 @@ export default class ColorSchemeTogglerPlugin extends Plugin {
   }
 
   refreshColorScheme() {
-    this.app.changeTheme(this.getColorScheme());
+    const current = this.getColorScheme();
+    const inverted = this.getInvertedColorScheme();
+
+    this.app.changeTheme(inverted);
+    this.app.changeTheme(current);
   }
 
   toggleColorScheme() {
@@ -42,7 +46,9 @@ export default class ColorSchemeTogglerPlugin extends Plugin {
   }
 
   getInvertedColorScheme() {
-    return this.getColorScheme() === this.COLOR_SCHEME_LIGHT ? this.COLOR_SCHEME_DARK : this.COLOR_SCHEME_LIGHT;
+    return this.getColorScheme() === this.COLOR_SCHEME_LIGHT
+      ? this.COLOR_SCHEME_DARK
+      : this.COLOR_SCHEME_LIGHT;
   }
 
   getColorScheme() {
