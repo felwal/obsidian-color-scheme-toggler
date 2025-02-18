@@ -3,6 +3,7 @@ import { Plugin } from "obsidian";
 export default class ColorSchemeTogglerPlugin extends Plugin {
   COLOR_SCHEME_DARK = "obsidian";
   COLOR_SCHEME_LIGHT = "moonstone";
+  COLOR_SCHEME_SYSTEM = "system";
 
   async onload() {
     console.log("loading plugin");
@@ -31,6 +32,18 @@ export default class ColorSchemeTogglerPlugin extends Plugin {
         this.toggleColorScheme();
       }
     });
+
+    this.addCommand({
+      id: "adapt-to-system",
+      name: "Use system color scheme",
+      callback: () => {
+        this.adaptToSystem();
+      }
+    });
+  }
+
+  adaptToSystem() {
+    this.app.changeTheme(this.COLOR_SCHEME_SYSTEM);
   }
 
   refreshColorScheme() {
